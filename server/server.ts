@@ -1,4 +1,5 @@
 import express from "express";
+import * as db from "./db";
 
 export class Server {
   private app: express.Application;
@@ -13,11 +14,19 @@ export class Server {
   /**Initializes express*/
   public async init() {
     this.setupExpress();
+    await this.databaseSetup();
   }
 
   /**Middlewares setup*/
   private setupExpress() {
     this.app.use(express.json());
+  }
+
+  /**Database setup
+   * Initializes connection with database
+   */
+  private async databaseSetup() {
+    await db.connect();
   }
 
   /**Initilizes server at given port*/
