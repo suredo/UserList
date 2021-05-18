@@ -1,6 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import request from "supertest";
+import { generate } from "gerador-validador-cpf";
+
 import { Routes } from "../server/routes";
 
 const app = express();
@@ -38,43 +40,59 @@ beforeAll(async () => {
   removeAllCollections();
 });
 
+const cpf = generate();
 const user1 = {
   name: "Sled",
   surname: "Campos Silva",
   telephone: "test",
-  cpf: "000.000.000-00",
+  cpf: cpf,
 };
 
 const user2 = {
   name: "Jhon",
   surname: "Silva",
   telephone: "test",
-  cpf: "000.000.000-00",
+  cpf: cpf,
 };
 
 const user3 = {
   name: "Jhon",
   surname: "Silva",
   telephone: "test",
-  cpf: "000.000.000-01",
+  cpf: generate(),
+};
+
+const user4 = {
+  name: "Jhon",
+  surname: "Silva",
+  telephone: "test",
+  cpf: "00000000000",
 };
 
 describe("POST: /api/adduser", () => {
-  it("Should return success true if a user is added", async (done) => {
+  it("Should return success true if cpf is valid and user added", async (done) => {
     const res = await request(app).post("/api/adduser").send(user1).expect(200);
     expect(res.body.success).toBe(true);
     done();
   });
 
-  it("Should return success false if there's and atempt to add user with same cpf", async (done) => {
+  it("Should return success false and error msg if there's and attempt to add user with same cpf", async (done) => {
     const res = await request(app).post("/api/adduser").send(user2).expect(400);
     expect(res.body.success).toBe(false);
+    expect(res.body.msg).toBe("CPF já cadastrado");
     done();
   });
 
   it("Should return success success if there's and atempt to add user with different cpf", async (done) => {
     const res = await request(app).post("/api/adduser").send(user3).expect(200);
     expect(res.body.success).toBe(true);
+    done();
+  });
+
+  it("Should return fail message if cpf is invalid ", async (done) => {
+    const res = await request(app).post("/api/adduser").send(user4).expect(400);
+    expect(res.body.success).toBe(false);
+    expect(res.body.msg).toBe("CPF inválido");
     done();
   });
 });
