@@ -51,7 +51,6 @@ const Register = () => {
   //validates cpf input
   const cpfValidation = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCpf(e.target.value);
-    console.log(cpf);
     const validate = e.target.value.match(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/);
     if (!validate) {
       setCpfError("Formato incorreto");
