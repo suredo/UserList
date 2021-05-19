@@ -26,4 +26,26 @@ export class UserController {
       res.status(400).send({ success: false, msg: "CPF inválido" });
     }
   }
+
+  /**Get user data by cpf field */
+  public getUser(req: Request, res: Response) {
+    user
+      .findOne({ cpf: req.body.cpf })
+      .then((data) => {
+        if (data) {
+          return res.status(200).send({ success: true, userData: data });
+        } else {
+          res.status(404).send({
+            success: false,
+            msg: "Informações de CPF não armazenadas.",
+          });
+        }
+      })
+      .catch((err) =>
+        res.status(500).send({
+          success: false,
+          err,
+        })
+      );
+  }
 }

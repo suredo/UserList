@@ -56,15 +56,15 @@ const user2 = {
 };
 
 const user3 = {
-  name: "Jhon",
-  surname: "Silva",
+  name: "Hikaru",
+  surname: "Nakamura",
   telephone: "test",
   cpf: generate(),
 };
 
 const user4 = {
-  name: "Jhon",
-  surname: "Silva",
+  name: "Magnus",
+  surname: "Carlsen",
   telephone: "test",
   cpf: "00000000000",
 };
@@ -93,6 +93,28 @@ describe("POST: /api/adduser", () => {
     const res = await request(app).post("/api/adduser").send(user4).expect(400);
     expect(res.body.success).toBe(false);
     expect(res.body.msg).toBe("CPF inválido");
+    done();
+  });
+});
+
+describe("GET: /api/getuser", () => {
+  it("Should return user if cpf is stored ", async (done) => {
+    const res = await request(app)
+      .get("/api/getuser")
+      .send({ cpf: user1.cpf })
+      .expect(200);
+    expect(res.body.success).toBe(true);
+    expect(res.body.userData.cpf).toBe(user1.cpf);
+    done();
+  });
+
+  it("Should return success fail and msg if cpf is not stored ", async (done) => {
+    const res = await request(app)
+      .get("/api/getuser")
+      .send({ cpf: user4.cpf })
+      .expect(404);
+    expect(res.body.success).toBe(false);
+    expect(res.body.msg).toBe("Informações de CPF não armazenadas.");
     done();
   });
 });

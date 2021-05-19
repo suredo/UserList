@@ -13,6 +13,7 @@ export class Api {
 
   private endpoints() {
     this.routes.post("/adduser", userController.addUser);
+    this.routes.get("/getuser", userController.getUser);
   }
 
   public getRoutes() {
