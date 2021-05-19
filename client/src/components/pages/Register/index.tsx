@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useHistory } from "react-router";
 import { addUser } from "../../../api/api";
 import {
   Button,
@@ -11,6 +12,7 @@ import {
 } from "./style";
 
 const Register = () => {
+  const history = useHistory();
   const [name, setName] = useState<string>("");
   const [surname, setSurname] = useState<string>("");
   const [telephone, setTelephone] = useState<string>("");
@@ -25,6 +27,9 @@ const Register = () => {
     const result = await addUser({ name, surname, telephone, cpf });
     if (result.msg) {
       setCpfError(result.msg);
+    }
+    if (result.success === true) {
+      history.push("/");
     }
   };
 
