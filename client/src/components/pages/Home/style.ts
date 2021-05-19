@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import InputMask from "react-input-mask";
+import { Link } from "react-router-dom";
 
 export const HomeStyle = styled.div`
   height: 100vh;
@@ -7,6 +8,7 @@ export const HomeStyle = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  gap: 20px;
 `;
 
 export const Form = styled.form`
@@ -44,6 +46,26 @@ export const Button = styled.input`
 
 export const Error = styled.p`
   margin: 0;
-  margin-top: 20px;
   color: red;
+`;
+
+export const UserData = styled.div`
+  border: 1px solid #b3cde0;
+  padding: 10px;
+  background-color: #03396c;
+`;
+
+export const Field = styled.p`
+  color: #b3cde0;
+  font-weight: bold;
+`;
+export const Value = styled.span`
+  font-weight: lighter;
+`;
+
+export const LinkTo = styled(Link)`
+  border: 1px solid white;
+  color: white;
+  padding: 10px;
+  text-decoration: none;
 `;
