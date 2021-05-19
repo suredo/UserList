@@ -20,8 +20,10 @@ const Register = () => {
   const [cpf, setCpf] = useState<string>("");
   const [cpfError, setCpfError] = useState<string>("");
 
+  //sends a post request with user data
   const handleSend = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    //checks for validation error on phone or cpf
     if (cpfError || phoneError) return;
     setCpfError("");
     const result = await addUser({ name, surname, telephone, cpf });
@@ -33,6 +35,7 @@ const Register = () => {
     }
   };
 
+  //validates phone input
   const phoneValidation = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTelephone(e.target.value);
     const validate = e.target.value.match(
@@ -45,6 +48,7 @@ const Register = () => {
     }
   };
 
+  //validates cpf input
   const cpfValidation = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCpf(e.target.value);
     console.log(cpf);
