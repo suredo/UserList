@@ -14,15 +14,40 @@ const Register = () => {
   const [name, setName] = useState<string>("");
   const [surname, setSurname] = useState<string>("");
   const [telephone, setTelephone] = useState<string>("");
+  const [phoneError, setPhoneError] = useState<string>("");
   const [cpf, setCpf] = useState<string>("");
-  const [error, setError] = useState<string>("");
+  const [cpfError, setCpfError] = useState<string>("");
 
   const handleSend = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError("");
+    if (cpfError || phoneError) return;
+    setCpfError("");
     const result = await addUser({ name, surname, telephone, cpf });
     if (result.msg) {
-      setError(result.msg);
+      setCpfError(result.msg);
+    }
+  };
+
+  const phoneValidation = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTelephone(e.target.value);
+    const validate = e.target.value.match(
+      /^(?:\+)[0-9]{2}\s?(?:\()[0-9]{2}(?:\))\s?[0-9]{4,5}(?:-)[0-9]{4}$/
+    );
+    if (!validate) {
+      setPhoneError("Formato incorreto");
+    } else {
+      setPhoneError("");
+    }
+  };
+
+  const cpfValidation = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCpf(e.target.value);
+    console.log(cpf);
+    const validate = e.target.value.match(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/);
+    if (!validate) {
+      setCpfError("Formato incorreto");
+    } else {
+      setCpfError("");
     }
   };
 
@@ -53,8 +78,9 @@ const Register = () => {
           placeholder="Telefone"
           required
           value={telephone}
-          onChange={(e) => setTelephone(e.target.value)}
+          onChange={phoneValidation}
         />
+        {phoneError ? <Error>{phoneError}</Error> : null}
         <InputWithMask
           mask="999.999.999-99"
           type="text"
@@ -62,9 +88,9 @@ const Register = () => {
           placeholder="CPF"
           required
           value={cpf}
-          onChange={(e) => setCpf(e.target.value)}
+          onChange={cpfValidation}
         />
-        {error ? <Error>{error}</Error> : null}
+        {cpfError ? <Error>{cpfError}</Error> : null}
         <Button type="submit" role="send" value="Enviar" />
       </Form>
     </RegisterStyle>
