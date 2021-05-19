@@ -29,8 +29,9 @@ export class UserController {
 
   /**Get user data by cpf field */
   public getUser(req: Request, res: Response) {
+    console.log(req.params);
     user
-      .findOne({ cpf: req.body.cpf })
+      .findOne({ cpf: req.params.cpf })
       .then((data) => {
         if (data) {
           return res.status(200).send({ success: true, userData: data });

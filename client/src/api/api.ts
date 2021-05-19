@@ -24,7 +24,7 @@ export const addUser = async (userData: IUserData) => {
 };
 
 export const getUser = async (cpf: string) => {
-  const data = await fetch(`/api/getuser?cpf=${cpf}`);
+  const data = await fetch(`/api/getuser/${cpf}`);
   const result = await data.json();
   return result;
 };
