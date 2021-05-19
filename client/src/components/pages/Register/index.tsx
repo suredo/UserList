@@ -1,6 +1,14 @@
 import { useState } from "react";
 import { addUser } from "../../../api/api";
-import { Button, Error, Form, Input, RegisterStyle, Title } from "./style";
+import {
+  Button,
+  Error,
+  Form,
+  Input,
+  InputWithMask,
+  RegisterStyle,
+  Title,
+} from "./style";
 
 const Register = () => {
   const [name, setName] = useState<string>("");
@@ -38,7 +46,8 @@ const Register = () => {
           value={surname}
           onChange={(e) => setSurname(e.target.value)}
         />
-        <Input
+        <InputWithMask
+          mask="+55 (99) 99999-9999"
           type="text"
           role="phone"
           placeholder="Telefone"
@@ -46,7 +55,8 @@ const Register = () => {
           value={telephone}
           onChange={(e) => setTelephone(e.target.value)}
         />
-        <Input
+        <InputWithMask
+          mask="999.999.999-99"
           type="text"
           role="cpf"
           placeholder="CPF"

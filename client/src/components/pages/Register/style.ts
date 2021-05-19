@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import InputMask from "react-input-mask";
 
 export const RegisterStyle = styled.div`
   height: 100vh;
@@ -24,6 +25,14 @@ export const Title = styled.h1`
 `;
 
 export const Input = styled.input`
+  width: 90%;
+  height: 30px;
+  color: #011f4b;
+  :focus {
+    outline: none;
+  }
+`;
+export const InputWithMask = styled(InputMask)`
   width: 90%;
   height: 30px;
   color: #011f4b;
